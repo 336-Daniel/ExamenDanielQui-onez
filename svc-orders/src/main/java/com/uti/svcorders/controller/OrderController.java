@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,27 +20,29 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    // 1. POST /api/orders (Crear una orden -> 201 Created)
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public OrderResponse createOrder(@Valid @RequestBody OrderRequest request) {
-        log.info("REST request to create an order for customer: {}", request.getCustomerName());
-        return orderService.createOrder(request);
-    }
-
-    // 2. GET /api/orders/{id} (Obtener orden por ID -> 200 OK)
-    @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public OrderResponse getOrderById(@PathVariable Long id) {
-        log.info("REST request to get order by id: {}", id);
-        return orderService.getOrderById(id);
-    }
-
-    // 3. GET /api/orders (Listar todas las órdenes -> 200 OK)
+    // Retorna todas las órdenes con datos del plato de svc-menu
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public List<OrderResponse> getAllOrders() {
-        log.info("REST request to get all orders");
-        return orderService.getAllOrders();
+    public ResponseEntity<List<OrderResponse>> getAllOrders() {
+        log.info("GET /api/orders - Fetching all orders");
+        return ResponseEntity.ok(orderService.getAllOrders());
+    }
+
+
+    // Retorna una orden específica enriquecida con datos del plato
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderResponse> getOrderById(@PathVariable Long id) {
+        log.info("GET /api/orders/{} - Fetching order by id", id);
+        return ResponseEntity.ok(orderService.getOrderById(id));
+    }
+
+
+    // Crea una nueva orden
+
+    @PostMapping
+    public ResponseEntity<OrderResponse> createOrder(
+            @Valid @RequestBody OrderRequest request) {
+        log.info("POST /api/orders - Creating order for dish id: {}", request.getDishId());
+        OrderResponse createdOrder = orderService.createOrder(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
     }
 }
