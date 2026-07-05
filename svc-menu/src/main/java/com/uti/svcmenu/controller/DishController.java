@@ -6,6 +6,7 @@ import com.uti.svcmenu.service.DishService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +24,8 @@ public class DishController {
     @PostMapping
     public ResponseEntity<DishResponse> createDish(@Valid @RequestBody DishRequest request) {
         log.info("POST /api/menu/dishes Creando el plato: {}", request.getName());
-        DishResponse createDish = dishService.createDish(request);
-        return ResponseEntity.ok(dishService.createDish(request));
+        DishResponse createdDish = dishService.createDish(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdDish);
     }
 
     // 2. GET /api/menu/dishes (Listar todos)

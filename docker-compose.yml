@@ -74,7 +74,7 @@ services:
     networks:
       - microservicios-network
     depends_on:
-      orders-db-db:
+      orders-db:
         condition: service_healthy
       menu-service:
         condition: service_started
@@ -96,7 +96,7 @@ services:
 
 volumes:
   menu-db-data:
-#  loan-db-data:
+  orders-db-data:
 networks:
   microservicios-network:
     driver: bridge

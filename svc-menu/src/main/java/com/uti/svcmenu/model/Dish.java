@@ -34,5 +34,5 @@ public class Dish {
     private Double price;
 
     @Column(nullable = false)
-    private Boolean available = true;
+    private Boolean available;
 }

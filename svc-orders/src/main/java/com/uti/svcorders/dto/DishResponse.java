@@ -1,6 +1,6 @@
 package com.uti.svcorders.dto;
 
-import com.uti.svcmenu.model.Category;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +18,7 @@ public class DishResponse {
 
     private String description;
 
-    private Category category;
+    private String category;
 
     private Double price;
 

@@ -15,6 +15,7 @@ public class DishMapper {
                 .description(request.getDescription())
                 .category(Category.valueOf(request.getCategory()))
                 .price(request.getPrice())
+                .available(true)
                 .build();
     }
 
@@ -35,6 +36,7 @@ public class DishMapper {
         dish.setDescription(request.getDescription());
         dish.setCategory(Category.valueOf(request.getCategory()));
         dish.setPrice(request.getPrice());
+        dish.setAvailable(request.getAvailable());
 
     }
 }

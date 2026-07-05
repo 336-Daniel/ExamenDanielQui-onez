@@ -25,4 +25,6 @@ public class DishRequest {
     @NotNull(message = "El precio es obligatorio")
     @Positive(message = "El precio debe ser mayor a 0")
     private Double price;
+
+    private Boolean available;
 }
